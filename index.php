@@ -1,8 +1,30 @@
-<!DOCTYPE html>
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors",1);
+
+session_start();
+
+require("facebook-php-sdk-v4-4.0-dev/autoload.php");
+
+use Facebook\FacebookSession;
+use Facebook\FacebookRedirectLoginHelper;
+
 const APPID = 924991424199035;
 const APPSECRET = ab3ff43dfffaa2491d4be9afb29391d3;
+
+FacebookSession::setDefaultApplication(APPID, APPSECRET);
+
+$helper = new FacebookRedirectLoginHelper('https://esgifbapp.herokuapp.com/');
+
+
+if(isset($_SESSION) && isset($_SESSION['fb_token'])){
+    $session = new FacebookSession($_SESSION['fb_token']);
+}else{
+    $session = $helper->getSessionFromRedirect();
+}
+
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Titre de ma page</title>
@@ -36,5 +58,21 @@ const APPSECRET = ab3ff43dfffaa2491d4be9afb29391d3;
     data-width="450"
     data-show-faces="true">
 </div>
+
+<br/>
+
+<pre>
+    <?php
+        if($session){
+            $_SESSION['fb_token'] = (string) $session->getAccessToken();
+            var_dump($session);
+        }else{
+
+            $loginUrl = $helper->getLoginUrl();
+            echo "<a href='".$loginUrl."'>Connect with Facebook</a>";
+
+        }
+    ?>
+</pre>
 </body>
 </html>

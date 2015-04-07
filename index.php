@@ -9,11 +9,10 @@ require("facebook-php-sdk-v4-4.0-dev/autoload.php");
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
 use Facebook\FacebookRequest;
-use Facebook\FacebookRequestException;
 use Facebook\GraphUser;
 
-const APPID = 924991424199035;
-const APPSECRET = ab3ff43dfffaa2491d4be9afb29391d3;
+const APPID = "924991424199035";
+const APPSECRET = "ab3ff43dfffaa2491d4be9afb29391d3";
 
 FacebookSession::setDefaultApplication(APPID, APPSECRET);
 

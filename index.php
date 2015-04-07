@@ -71,7 +71,9 @@ if(isset($_SESSION) && isset($_SESSION['fb_token'])){
             $request_user = new FacebookRequest($session,"GET","/me");
             $request_user_executed = $request_user->execute();
             $user = $request_user_executed->getGraphObject(GraphUser::className());
-            var_dump($user);
+//            var_dump($user);
+            echo "Bonjour ".$user->getName();
+            echo "<br/>Bonjour ".$user->getFirstName();
         }else{
 
             $loginUrl = $helper->getLoginUrl();

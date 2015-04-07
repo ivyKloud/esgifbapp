@@ -8,6 +8,9 @@ require("facebook-php-sdk-v4-4.0-dev/autoload.php");
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\FacebookRequestException;
+use Facebook\GraphUser;
 
 const APPID = 924991424199035;
 const APPSECRET = ab3ff43dfffaa2491d4be9afb29391d3;
@@ -65,6 +68,10 @@ if(isset($_SESSION) && isset($_SESSION['fb_token'])){
     <?php
         if($session){
             $_SESSION['fb_token'] = (string) $session->getAccessToken();
+
+            $request_user = new FacebookRequest($session,"GET","/me");
+            $request_user_executed = $request_user->execute();
+            $user = $request_user_executed->getGraphObject(GraphUser::className());
             var_dump($session);
         }else{
 
